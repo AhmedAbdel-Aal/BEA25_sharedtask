@@ -1,0 +1,42 @@
+experiment 1: 16.04 @ 10:23
+model: gpt-4o-mini
+prompt: v1
+test cost:
+ - cost before: $51.16
+ - cost after: 50.87
+ - total cost: 0.29$
+test time:
+ - total time: 1hr 34min
+
+dev metrics: 35.4, 56.6
+test metrics: rank 15 - 36.64  57.04 
+-----------------------------------------
+experiment 2: 16.04 
+model: gpt-4o
+prompt: v1
+dev cost:
+ - cost before: $50.80
+ - cost after: §49.77
+ - total cost: 0.43$
+dev time :
+ - total time:
+
+dev metrics (50): 40.5, 63.0
+test metrics: 
+-----------------------------------------
+
+experiment 4: 16.04 @ 16:48
+model: gpt 4
+prompt: v2
+
+test cost:
+    - before: 47.89
+    - after: $42.40
+    - total:  3.40
+
+test time:
+    - with parallel - 10min
+    - without - 2h 30mins
+
+dev metrics (full): 58.9 - 83.5
+test metrics : 52 - 74.5
