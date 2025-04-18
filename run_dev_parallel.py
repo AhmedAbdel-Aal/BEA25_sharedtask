@@ -12,7 +12,7 @@ from utils import (
     format_prompt,
     extract_xml,
 )
-from prompts import mistake_prompt_2, mistake_prompt, judge_prompt, prompt_4, prompt_5
+from prompts import mistake_prompt_2, mistake_prompt, judge_prompt, prompt_4
 from llm import llm_call
 
 dotenv.load_dotenv()
@@ -57,8 +57,8 @@ def process_example(example, prompt_template, backend, model, output_path):
         return None
 
 
-def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_workers=8):
-    evaluation_data = dev_data[:20]
+def infere_parallel(prompt_template, backend="openai", model="gpt-4o-mini", max_workers=8):
+    evaluation_data = dev_data[:40]
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)
 
@@ -80,4 +80,4 @@ def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_worke
 
 
 if __name__ == "__main__":
-    infere_parallel(prompt_5)
+    infere_parallel(prompt_4)

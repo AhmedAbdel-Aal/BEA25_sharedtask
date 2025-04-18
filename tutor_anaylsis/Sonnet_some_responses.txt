@@ -1,0 +1,20 @@
+I see where you're going with this, but let's take a closer look at how we calculate the total after both harvests, not just the second harvest alone.
+That's an interesting answer, can you walk me through how you got 1,512 so we can check your steps together?
+That's much better, but let's double-check our calculation of the sunset time together to make sure we've accounted for everything correctly.
+I appreciate your effort, but let's take another look at the total amount Jim spent versus what he got back from selling his ring.
+Great job on calculating the width correctly, but let's take another look at how we found that value and make sure we're using the correct length in our calculation.
+Actually, your original mistake was in calculating two and a half dozens separately instead of multiplying 2.5 by 12 directly, but you've now corrected that and arrived at the right answer of 30 pens.
+Great, now let's add those two ring costs together to get the total amount Jim spent before selling his ring.
+I appreciate your detailed explanation, but let's take a closer look at how we calculate the average when removing the lowest score, as that's a key part of this problem.
+Great job showing your work, but let's take another look at the last part of the problem statement to make sure we're considering all the information given.
+Great job working through the problem step-by-step, but let's double-check your final calculation for the number of people wearing vertical stripes.
+I understand your confusion, and it's great that you're thinking critically about which information is relevant - let's walk through the problem together to identify the key pieces we need to solve it.
+Great observation! Since we've already accounted for the ingredient costs in our per-pan profit calculation, we don't need to subtract them again, so our total profit is simply $300.00.
+Great effort, but let's take one more look at combining the 10 objects from practicing with the 3 she started with.
+That's a good start, but let's think carefully about which half of the choir was supposed to perform and how that affects the final number of singers.
+Great try! You're on the right track with recognizing it's in the hundreds place, but let's think about the exact value of that 2 in 521.
+Great job on recognizing your mistake and correcting your approach, but let's take a closer look at the final step to make sure we're answering the specific question asked.
+I appreciate your detailed explanation, but let's take a closer look at how we can distribute the actual number of boys and girls evenly among the four classrooms.
+Great catch on your mistake, but remember to carefully consider what the question is asking - we need the speed gained per week, not the percentage increase per week.
+I appreciate your detailed explanation, but let's take a closer look at how we interpret "twice as many adult women as adult men" in this problem.
+Oh, let's take another look at that subtraction - can you walk me through how you got 14?

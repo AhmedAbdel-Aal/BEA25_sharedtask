@@ -32,6 +32,7 @@ def llm_call_openai(prompt, model="gpt-4o"):
 
     completion = client.chat.completions.create(
         model=model,
+        temperature=0.2,
         messages=[
             {
                 "role": "system",

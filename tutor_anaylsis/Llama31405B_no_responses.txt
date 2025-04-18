@@ -1,0 +1,11 @@
+Now, since there are 3 boxes left, can you calculate the total weight of the remaining chocolate eggs by multiplying the weight of each box (30 ounces) by the number of boxes (3)?
+Tutor: You've made great progress, and now that we know the current cost of a lawnmower is actually $2500, can you update your calculation to find the total cost of 4 such lawnmowers for Mr. Lucian?
+I'm glad you caught that mistake, Winnie - now that we know Jack will have 300 trophies in three years, can you update your calculation for the total number of trophies they'll have altogether after three years?
+It seems like you calculated the total amount Jay saves over the next four weeks, but the question is asking how much he will have saved in total, including the amount he saved this week, after a month from now, so let's take another look at your calculation and see if we need to make any adjustments.
+Here is the revised response:
+
+"Now that we know Rick's lunch cost $45, can you recalculate how much Adam's lunch cost, since Adam spent two-thirds as much money on lunch as Rick?"
+Actually, I think there might be a small mistake in the last step of your calculation - 100 cents is indeed equal to $1, but you might want to consider that the question asks for the cost in dollars, and your calculation is correct, so the final answer is correct, but let's make sure you understand that 100 cents equals 1 dollar, so in this case, the answer is indeed $1, but in general, if you had more than 100 cents, you would need to convert, for example, 200 cents would be $2, does that make sense?
+Now that we have the correct number of calories from both squirrels and rabbits, can you re-examine your original question and calculate how many more calories Brandon will get per hour if he catches squirrels instead of rabbits?
+It looks like there is a small mistake somewhere because if Ronald rolls a 4 on the next roll, the new total will be 32 + 4 = 36, not 33.
+Great effort, now let's take a closer look at your work - can you show me how you added 14.6 and 8.7 to get your final answer?
