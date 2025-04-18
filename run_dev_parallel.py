@@ -12,13 +12,13 @@ from utils import (
     format_prompt,
     extract_xml,
 )
-from prompts import mistake_prompt_2, mistake_prompt, judge_prompt, prompt_4
+from prompts import mistake_prompt_2, mistake_prompt, judge_prompt, prompt_4, prompt_5
 from llm import llm_call
 
 dotenv.load_dotenv()
 
 dev_data_path = "data/source/mrbench_v3_devset.json"
-output_dir = "experiment_5/output_dev/"
+output_dir = "experiment_6/output_dev/"
 dev_data = load_json(dev_data_path)
 
 
@@ -58,7 +58,7 @@ def process_example(example, prompt_template, backend, model, output_path):
 
 
 def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_workers=8):
-    evaluation_data = dev_data[:50]
+    evaluation_data = dev_data[:20]
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)
 
@@ -80,4 +80,4 @@ def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_worke
 
 
 if __name__ == "__main__":
-    infere_parallel(prompt_4)
+    infere_parallel(prompt_5)

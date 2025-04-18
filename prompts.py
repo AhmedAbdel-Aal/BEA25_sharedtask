@@ -304,3 +304,88 @@ Return your response in the following xml format:
 <analysis> Your space to do the evaluation steps step-by-step </analysis>
 <mistake> Yes/To some extent/No </mistake> 
 """
+
+
+prompt_5 = """
+You must return exactly one of three labels, wrapped in XML tags:
+
+<mistake>Yes</mistake>          – the tutor clearly identified the mistake  
+<mistake>To some extent</mistake> – the tutor sensed something is off but gave only
+                                   vague or off‑target feedback  
+<mistake>No</mistake>           – the tutor failed to notice the mistake or
+                                   incorrectly affirmed the wrong answer
+
+-------------------------------------------------
+DECISION TABLE (quick reference)
+┌────────────────────────────┬───────────────────────┐
+│ Tutor’s final action       │ Correct label         │
+├────────────────────────────┼───────────────────────┤
+│ Says/ implies answer is right      │ No            │
+│ Only praise, no correction          │ No            │
+│ Vague “check again?” (no target)    │ To some extent│
+│ Targets the exact wrong step        │ Yes           │
+│ Gives explicit correction           │ Yes           │
+│ Guides with a focused / probing /   │               │
+│   telling move on the wrong step    │ Yes           │
+└────────────────────────────┴───────────────────────┘
+
+-------------------------------------------------
+DEFINITIONS & EXAMPLES
+
+**1. Explicit correction → Yes**  
+Tutor states or clearly implies the answer is wrong *and* pinpoints why.  
+*Ex.* “You double‑counted the original songs, so the total should be 105 min.”
+
+**2. Implicit correction via pedagogical moves → Yes**  
+The tutor focuses, probes, or tells in a way that directs the student to the
+specific mistaken step, even if the tutor never says “wrong.”  
+*Focus move* – asks about the erroneous number/step.  
+*Probing move* – asks the student to justify that precise step.  
+*Telling move* – offers an alternative method because that step is flawed.  
+Praise followed by such a move still counts as Yes.
+
+**3. Partial / vague awareness → To some extent**  
+Tutor hints that something might be wrong but does not target or clarify it.  
+*Ex.* “Are you sure about that?” with no follow‑up.
+
+**4. No identification → No**  
+Tutor praises, accepts, or moves on; or gives an incorrect “correction.”
+
+-------------------------------------------------
+ILLUSTRATIVE EXAMPLES
+
+*Example A – Focus + Telling (Yes)*  
+Student: 2800 − 65 = 1745  
+Tutor: “Great effort! Double‑check that subtraction: 2800 − 65 = ?”  
+<mistake>Yes</mistake>
+
+*Example B – Vague hint (To some extent)*  
+Student: 14 × 5 = 65  
+Tutor: “Check that multiplication again?”  
+<mistake>To some extent</mistake>
+
+*Example C – Praise only (No)*  
+Student: 5 × 14 = 75  
+Tutor: “Well tried! +1 point for your effort.”  
+<mistake>No</mistake>
+
+*Example D – Wrong correction (No)*  
+Student: Takes 20 % of 24 instead of 20  
+Tutor: “Careful: 20 % of 24 is 4.8, so total is 28.8. Great!”  
+<mistake>No</mistake>
+
+-------------------------------------------------
+NOW EVALUATE THIS DIALOGUE
+
+Dialogue:
+{dialogue}
+
+Tutor's last feedback: 
+{feedback}
+
+-------------------------------------------------
+Return **ONLY** the following XML, nothing else:
+
+<analysis>Your brief (≤ 2 sentences) justification here</analysis>
+<mistake>Yes / To some extent / No</mistake>
+"""
