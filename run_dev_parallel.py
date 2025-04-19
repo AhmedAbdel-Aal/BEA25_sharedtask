@@ -18,7 +18,7 @@ from llm import llm_call
 dotenv.load_dotenv()
 
 dev_data_path = "data/source/mrbench_v3_devset.json"
-output_dir = "experiment_6/output_dev/"
+output_dir = "experiment_fewshot/output_dev/"
 dev_data = load_json(dev_data_path)
 
 
@@ -57,7 +57,7 @@ def process_example(example, prompt_template, backend, model, output_path):
         return None
 
 
-def infere_parallel(prompt_template, backend="openai", model="gpt-4o-mini", max_workers=8):
+def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_workers=8):
     evaluation_data = dev_data[:40]
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)

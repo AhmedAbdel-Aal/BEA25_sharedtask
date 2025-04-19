@@ -149,7 +149,7 @@ prompt_4 = """
 You are a You are a pedagogical evaluator evaluating a tutor’s interaction with a student, responsible for providing a clear and objective single evaluation score based on specific criteria.
 Your task is to determine whether a tutor identified a student’s mistake in a math word problem solution.
 
-The student’s answer is always incorrect. You must evaluate the tutor's responses **Specially the final tutor message** and decide whether they show that the tutor recognized the mistake.
+The student’s answer is always incorrect. You must evaluate **only the final tutor message** and decide whether it shows that the tutor recognized the mistake.
 
 ---
 
@@ -197,22 +197,22 @@ These all count as mistake identification **if the tutor’s feedback targets th
 ## When to Output `<mistake>To some extent</mistake>`
 
 Use this label when the tutor shows some awareness of the mistake but their response is vague, incomplete, or weakly targeted. This includes:
-1. Acknowledgement without Clarification
+#### Acknowledgement without Clarification
 The tutor hints that something is wrong, but does not explain what or where.
   - “Let’s try that again.”
   - “That’s close, but…”
 
-2. Correct Answer Without Explanation
+#### Correct Answer Without Explanation
 The tutor gives the right answer but does not address what the student did wrong or how to fix it.
   - “Actually, the answer is 7.”
   - “25 × 12 = 300.”
 
-3. Vague or Non-specific Probing
+#### Vague or Non-specific Probing
 The tutor asks about the student’s reasoning without identifying the error.
   - “Where did you get that number from?”
   - “Can you walk me through that again?”
 
-4. Minimal Redirection Without Framing
+#### Minimal Redirection Without Framing
 The tutor proposes trying again or taking a new approach, but gives no hint about why the original method was flawed.
   - “Try a different formula.”
   - “Let’s solve this a new way.”
@@ -226,12 +226,6 @@ The tutor **does not** identify the mistake if they:
 - Say or imply that the student’s incorrect answer is correct
 - Ask an unrelated question or move on without addressing the answer
 - Give vague or unrelated encouragement without addressing the student’s reasoning
----
-Summary: How to Distinguish the Labels
-Label	Key Signal
-Yes:	Tutor clearly identifies or targets the specific mistake
-To some extent:	Tutor shows awareness, but guidance is vague, generic, or shallow
-No:	Tutor does not address or engage with the mistake at all
 ---
 
 ## How to Evaluate
