@@ -70,10 +70,31 @@ def evaluate_mistake_identification_f1_multiclass(gold_data, pred_data, mode='st
 
             gold_label = gold_response['annotation']['Mistake_Identification'].strip().lower()
             pred_label = pred_response['annotation']['Mistake_Identification'].strip().lower()
+            pred_label_reverse = pred_response['annotation_reverse']['Mistake_Identification'].strip().lower()
+
+            p1 = pred_label
+            p2 = pred_label_reverse
+            p3 = 'Yes'
+
+            if p1 == 'entailment' and p2 == 'contradiction':
+                p3 = 'yes'
+            elif p1 == 'contradiction' and p2 == 'entailment':
+                p3 = 'no'
+            elif p1 == 'neutral' and p2 == 'neutral':
+                p3 = 'to some extent'
+            elif p1 == 'entailment' and p2 == 'neutral':
+                p3 = 'yes'
+            elif p1 == 'neutral' and p2 == 'entailment':
+                p3 = 'no'
+            elif p1 == 'contradiction' and p2 == 'contradiction':
+                p3 = 'to some extent'
+            else:
+                p3 = 'yes'
+            
 
             if gold_label in gold_label_mapping and pred_label in label_mapping:
                 y_true.append(gold_label_mapping[gold_label])
-                y_pred.append(label_mapping[pred_label])
+                y_pred.append(gold_label_mapping[p3])
 
     if not y_true:
         print("No matching predictions found.")
