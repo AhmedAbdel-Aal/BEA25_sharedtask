@@ -40,3 +40,16 @@ test time:
 
 dev metrics (full): 58.9 - 83.5
 test metrics : 52 - 74.5
+
+
+
+-------------------------
+experiment s3:
+
+model: gpt 4.1
+start test: $32.18
+end test:
+
+
+dev (60): 61, 83
+test: 

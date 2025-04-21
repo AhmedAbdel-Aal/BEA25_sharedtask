@@ -15,7 +15,7 @@ def collect_json_files(output_dir: str) -> list:
         if filename.endswith('.json'):
             file_content = load_json(os.path.join(output_dir, filename))
             json_files.append(file_content)
-    
+    print(f"Collected {len(json_files)} JSON files from {output_dir}")
     return json_files
 
 def write_collected_json(output_dir: str, submission_path: str):
@@ -29,8 +29,8 @@ def write_collected_json(output_dir: str, submission_path: str):
 
 
 if __name__ == "__main__":
-    output_dir = "experiment_4/output_test/"
-    submission_path = "experiment_4/output_test/predictions.json"
+    output_dir = "experiment_fs/output_test/"
+    submission_path = "experiment_fs/submission/predictions.json"
     
     write_collected_json(output_dir, submission_path)
     print(f"Collected JSON files have been written to {submission_path}")
