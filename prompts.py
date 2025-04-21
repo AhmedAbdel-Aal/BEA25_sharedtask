@@ -1,3 +1,121 @@
+prompt_get_mistake = """
+You are expert math tutor. Your task is to identify the mistake in the student's solution to a math word problem. 
+The student’s answer is always incorrect.
+
+## Your Task:
+Analyze the given mathematical problem and the student's solution to identify the exact mistake(s) the student has made. Focus on:
+1. Conceptual errors (misunderstanding of mathematical concepts)
+2. Procedural errors (incorrect application of mathematical procedures)
+3. Calculation errors (arithmetic mistakes)
+4. Problem interpretation errors (misunderstanding what the problem is asking)
+
+For each example, clearly articulate:
+- The correct interpretation of the problem
+- The specific error(s) in the student's solution
+- What the correct solution approach should be
+
+## Examples:
+
+### Example 1:
+Dialogue:
+- Tutor: Hi, could you please provide a step-by-step solution for the question below? The question is: Sophia is thinking of taking a road trip in her car, and would like to know how far she can drive on a single tank of gas. She has traveled 100 miles since last filling her tank, and she needed to put in 4 gallons of gas to fill it up again. The owner's manual for her car says that her tank holds 12 gallons of gas. How many miles can Sophia drive on a single tank of gas?
+- Student: Sophia used 4 out of the 12 gallons of gas in her tank, so there are 12-4 = 8 gallons of gas left in the tank. If Sophia can drive 100 miles on 4 gallons of gas, then she can drive 100/4 = 25 miles per gallon. Therefore, with 8 gallons of gas left in the tank, Sophia can drive 25 x 8 = 200 miles on a single tank of gas.
+- Tutor: talk me through your solution
+- Student: Hi I started by figuring out how many gallons of gas were left in Sophia's tank. I knew that she had used 4 gallons of gas to fill it up so I subtracted 4 from 12 to get 8 gallons of gas left in the tank. Then I figured out how many miles Sophia could drive on a single gallon of gas. I knew that she had driven 100 miles on 4 gallons of gas so I divided 100 by 4 to get 25 miles per gallon. Finally I multiplied 25 by 8 to get 200 miles which is how many miles Sophia can drive on a single tank of gas."
+
+<mistake>
+The student has made a problem interpretation error. They misunderstood the scenario described in the problem. 
+
+The problem states that Sophia "has traveled 100 miles since last filling her tank, and she needed to put in 4 gallons of gas to fill it up again." This means that Sophia has:
+1. Started with a full tank (12 gallons)
+2. Driven 100 miles, which consumed 4 gallons
+3. Refilled those 4 gallons to return to a full tank
+
+The student incorrectly interprets this as meaning that Sophia currently has 8 gallons left in her tank (12-4=8). But the problem is asking about the total distance on a full tank, not the remaining distance.
+
+The student correctly calculates the fuel efficiency (25 miles per gallon), but then multiplies it by the wrong amount of gas (8 gallons instead of 12 gallons).
+
+The correct solution should multiply the fuel efficiency by the total tank capacity:
+25 miles per gallon × 12 gallons = 300 miles on a full tank
+</mistake>
+
+### Example 2:
+Dialogue:
+- Tutor: Hi, could you please provide a step-by-step solution for the question below? The question is: Hansel has a created album on Spotify that contains 25 songs and each song is 3 minutes long. If she adds 10 more songs to the album with the same duration, how many minutes will it take her to finish all the songs in the album?
+- Student: The total duration of the original 25 songs is 25 x 3 = 75 minutes.\nThe total duration of the album after adding 10 more songs is (25 + 10) x 3 = 105 minutes.\nTherefore, it will take Hansel 75 + 105 = 180 minutes to finish all the songs in the album.
+- Tutor: Hey Claire, can you work me through your solution please?
+- Student: Sure. I started by calculating the total duration of the original 25 songs, which is 25 x 3 = 75 minutes. Then, I calculated the total duration of the album after adding 10 more songs, which is (25 + 10) x 3 = 105 minutes. Finally, I added the two numbers together to get the total duration of 180 minutes.
+
+<mistake>
+The student has made a procedural error in the final step of the calculation.
+
+The student correctly:
+1. Calculated the original album duration: 25 songs × 3 minutes = 75 minutes
+2. Calculated the new album duration after adding 10 more songs: (25 + 10) songs × 3 minutes = 105 minutes
+
+However, the student then makes a critical error by adding these two values together (75 + 105 = 180 minutes). This incorrectly counts the original 25 songs twice.
+
+The question asks for the total time to finish all songs in the updated album, which is simply the duration of the new album: 105 minutes. 
+
+The correct solution is 105 minutes, not 180 minutes.
+</mistake>
+
+### Example 3:
+**Problem**: Two white socks cost 25 cents more than a single brown sock. If two white socks cost 45 cents, how much would you pay for 15 brown socks?
+
+**Student Solution**: Let the cost of a single brown sock be x. Then, the cost of two white socks would be x + 0.25. Given that two white socks cost 45 cents, we can write: 2(x + 0.25) = 45. Simplifying this equation, we get: 2x + 0.5 = 45, 2x = 44.5, x = 22.25. Therefore, a single brown sock costs 22.25 cents. So, 15 brown socks would cost 15 x 22.25 = $333.75 cents.
+
+**Error Analysis**:
+The student has made multiple errors:
+
+1. **Equation setup error**: The student incorrectly represents "two white socks cost 25 cents more than a single brown sock." 
+   - Let x = cost of one brown sock
+   - Let y = cost of one white sock
+   - The correct relationship is: 2y = x + 25 cents (two white socks cost 25 cents more than one brown sock)
+   - Or equivalently: 2y - x = 25 cents
+   - The student incorrectly wrote this as: 2y = x + 0.25 (mistaking dollars for cents) and then: 2(x + 0.25) = 45 (which doesn't match the original relationship)
+
+2. **Unit conversion error**: The student confuses cents and dollars in the setup (writing 0.25 instead of 25 cents)
+
+3. **Algebraic error**: The student wrote 2(x + 0.25) = 45, which would expand to 2x + 0.5 = 45, but this doesn't match the stated relationship between white and brown socks
+
+The correct approach would be:
+1. Let x = cost of one brown sock in cents
+2. We know two white socks cost 45 cents
+3. Two white socks cost 25 cents more than one brown sock
+4. So: 45 cents = x + 25 cents
+5. Therefore: x = 20 cents (cost of one brown sock)
+6. 15 brown socks cost: 15 × 20 cents = 300 cents = $3.00
+
+### Example 4:
+**Problem**: Every month, Madeline has to buy food, treats, and medicine for her dog. Food costs $25 per week. Treats cost $20 per month. Medicine costs $100 per month. How much money does Madeline spend on her dog per year if there are 4 weeks in a month?
+
+**Student Solution**: In a month, Madeline spends 4 x $25 = $100 on food for her dog. In a year, Madeline spends 12 x $100 = $1200 on medicine for her dog. In a year, Madeline spends 12 x $20 = $240 on treats for her dog. Therefore, Madeline spends a total of $100 + $1200 + $240 = $1540 on her dog per year.
+
+**Error Analysis**:
+The student has made a calculation error related to converting monthly food costs to annual costs.
+
+The student correctly calculates:
+1. Monthly food costs: 4 weeks × $25 per week = $100 per month
+2. Annual medicine costs: 12 months × $100 per month = $1200 per year
+3. Annual treat costs: 12 months × $20 per month = $240 per year
+
+However, the student fails to multiply the monthly food cost by 12 to get the annual food cost. They simply add the monthly food cost ($100) to the annual costs for medicine and treats, rather than converting it to an annual figure first.
+
+The correct calculation for annual food costs should be:
+12 months × $100 per month = $1200 per year
+
+The correct total annual cost should be:
+$1200 (food) + $1200 (medicine) + $240 (treats) = $2640 per year
+
+## Your Turn:
+Dialogue:
+{dialogue}
+
+Return your answer in the following xml formart:
+<mistake> the mistake in the student's solution </mistake>
+"""
+
 # The student’s answer is always incorrect. You must evaluate **only the final tutor message** and decide whether it shows that the tutor recognized the mistake.
 prompt_fs= """
 You are a You are a pedagogical evaluator evaluating a tutor’s interaction with a student, responsible for providing a clear and objective single evaluation score based on specific criteria.
