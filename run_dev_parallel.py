@@ -12,7 +12,7 @@ from utils import (
     format_prompt,
     extract_xml,
 )
-from prompts import prompt_fs, prompt_zs
+from prompts import prompt_zs
 from llm import llm_call
 
 dotenv.load_dotenv()
@@ -46,6 +46,7 @@ def process_example(example, prompt_template, backend, model, output_path):
 
             tutor_info['annotation'] = {
                 'Mistake_Identification': extract_xml(llm_response, "mistake_identification"),
+                'score': extract_xml(llm_response, "score"),
                 'Analysis': extract_xml(llm_response, "analysis"),
             }
 

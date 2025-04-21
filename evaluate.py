@@ -28,17 +28,36 @@ def evaluate_mistake_identification_f1_multiclass(gold_data, pred_data, mode='st
     y_true = []
     y_pred = []
 
-    label_mapping = {
+    gold_label_mapping = {
         "yes": 0,
         "to some extent": 1,
         "no": 2
     }
 
+    label_mapping = {
+        '0': 2,
+        '1': 2,
+        '2': 1,
+        '3': 1,
+        '4': 0,
+        '5': 0,
+    }
+
+
+
     if mode != 'strict':
-        label_mapping = {
+        gold_label_mapping = {
         "yes": 0,
         "to some extent": 0,
         "no":1
+        }
+        label_mapping = {
+        '0': 1,
+        '1': 1,
+        '2': 0,
+        '3': 0,
+        '4': 0,
+        '5': 0,
         }
 
 
@@ -58,10 +77,12 @@ def evaluate_mistake_identification_f1_multiclass(gold_data, pred_data, mode='st
             pred_response = pred_item['tutor_responses'][model_name]
 
             gold_label = gold_response['annotation']['Mistake_Identification'].strip().lower()
-            pred_label = pred_response['annotation']['Mistake_Identification'].strip().lower()
+            pred_label = pred_response['annotation']['score'].strip().lower()
 
-            if gold_label in label_mapping and pred_label in label_mapping:
-                y_true.append(label_mapping[gold_label])
+
+
+            if gold_label in gold_label_mapping and pred_label in label_mapping:
+                y_true.append(gold_label_mapping[gold_label])
                 y_pred.append(label_mapping[pred_label])
 
     if not y_true:
