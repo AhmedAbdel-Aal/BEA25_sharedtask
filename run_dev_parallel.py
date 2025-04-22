@@ -58,7 +58,7 @@ def process_example(example, prompt_template, backend, model, output_path):
         return None
 
 
-def infere_parallel(prompt_template, backend="openai", model="gpt-4.1", max_workers=8):
+def infere_parallel(prompt_template, backend="openai", model="gpt-4o-mini", max_workers=8):
     evaluation_data = dev_data[140:200]
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)

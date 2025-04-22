@@ -48,8 +48,9 @@ experiment s3:
 
 model: gpt 4.1
 start test: $32.18
-end test:
+end test: $14.76
 
 
 dev (60): 61, 83
-test: 
+dev (60-mini): 50, 74
+test: 62.9, 83.5
