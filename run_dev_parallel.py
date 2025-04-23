@@ -12,14 +12,14 @@ from utils import (
     format_prompt,
     extract_xml,
 )
-from prompts import prompt_fs
+from prompts import prompt
 #from pp import prompt_fs
 from llm import llm_call
 
 dotenv.load_dotenv()
 
 dev_data_path = "data/source/mrbench_v3_devset.json"
-output_dir = "experiment_fs/output_dev/"
+output_dir = "cot_answers/output_dev/"
 dev_data = load_json(dev_data_path)
 
 
@@ -31,26 +31,28 @@ def get_already_processed_ids(output_dir: str) -> set:
 
 def process_example(example, prompt_template, backend, model, output_path):
     conv_id = example['conversation_id']
-    output_file = output_path / f"{conv_id}.json"
-
-    if output_file.exists():
-        return None  # already processed
 
     try:
         dialogue_string = dialogue_to_string(extract_dialogue(example["conversation_history"]))
 
         for tutor_id, tutor_info in example['tutor_responses'].items():
+            output_file_path = output_path / f"{conv_id}_{tutor_id}.json"
             tutor_response = tutor_info['response']
+            label = tutor_info['annotation']['Mistake_Identification']
 
-            prompt = format_prompt(prompt_template, dialogue=dialogue_string, feedback=tutor_response)
+            prompt = format_prompt(prompt_template, dialogue=dialogue_string, feedback=tutor_response, label=label)
             llm_response = llm_call(prompt, backend=backend, model=model)
-
-            tutor_info['annotation'] = {
-                'Mistake_Identification': extract_xml(llm_response, "mistake_identification"),
-                'Analysis': extract_xml(llm_response, "analysis"),
+            
+            output_file = {
+                'conversation_id': conv_id,
+                'tutor_id': tutor_id,
+                'dialogue': dialogue_string,
+                'feedback': tutor_response,
+                'reasoning': extract_xml(llm_response, "reasoning"),
+                'label': extract_xml(llm_response, "mistake_identification"),
             }
 
-        save_json(output_file, example)
+            save_json(output_file_path, output_file)
         return conv_id
 
     except Exception as e:
@@ -58,8 +60,8 @@ def process_example(example, prompt_template, backend, model, output_path):
         return None
 
 
-def infere_parallel(prompt_template, backend="openai", model="gpt-4o-mini", max_workers=8):
-    evaluation_data = dev_data[140:200]
+def infere_parallel(prompt_template, backend="openai", model="gpt-4.1", max_workers=8):
+    evaluation_data = dev_data[0:20]
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)
 
@@ -81,4 +83,4 @@ def infere_parallel(prompt_template, backend="openai", model="gpt-4o-mini", max_
 
 
 if __name__ == "__main__":
-    infere_parallel(prompt_fs)
+    infere_parallel(prompt)

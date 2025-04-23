@@ -29,8 +29,8 @@ def write_collected_json(output_dir: str, submission_path: str):
 
 
 if __name__ == "__main__":
-    output_dir = "experiment_fs/output_test/"
-    submission_path = "experiment_fs/submission/predictions.json"
+    output_dir = "cot_answers/output_dev/"
+    submission_path = "cot_data.json"
     
     write_collected_json(output_dir, submission_path)
     print(f"Collected JSON files have been written to {submission_path}")
