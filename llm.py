@@ -87,7 +87,7 @@ def llm_call_llama(prompt, model="meta-llama/Meta-Llama-3.1-70B-Instruct"):
 
 def llm_call(prompt, backend="openai", model="gpt-4o-mini"):
     if backend == "openai":
-        return llm_call_openai(prompt, model)
+        return llm_call_openai(prompt, "gpt-4o")
     elif backend == "deepseek":
         return llm_call_deepseek(prompt)
     elif backend == "mistral":

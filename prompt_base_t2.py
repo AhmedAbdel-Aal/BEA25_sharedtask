@@ -19,19 +19,20 @@ Tutors may respond to mistakes in different ways. You must judge if the tutors�
 
 Follow these steps carefully:
 
-1. **Focus on the student’s last message**  
-   Read the student’s final explanation. Identify their mistake.
+1. **Read the student’s final message carefully.**
+   - Identify the **mistake**: Which step, assumption, or calculation is incorrect?
 
-2. **Understand the student’s reasoning**  
-   What step or assumption is incorrect? Be precise.
+2. **Read the tutor’s final message.**
+   - Ask: Does the tutor point out **exactly which part** of the student’s solution is mistaken?
+   - Look for references to:
+     - A particular **step**, value, assumption, or equation.
+     - A phrase like "your mistake is in..." or "when you did X..."
+     - Clear guidance that **narrows down the error location.**
 
-3. **Examine the tutor’s feedback**  
-   Take the whole conversation in consideration, but evaluate the tutor's last response. Check whether the tutor showed awareness of the mistake:
-   - Directly pointed out the mistake
-   - Used a Focus, Probing, or Telling move to guide the student toward recognizing it.
-
-4. **Decide your label**  
-   Based on your analysis, select one of: Yes, To some extent, or No.
+3. **Decide your label:**
+   - Yes → The tutor **pinpoints the mistake** precisely and clearly.
+   - To some extent → The tutor **hints at the location**, but imprecisely or ambiguously.
+   - No → The tutor does **not identify the mistake's location** at all.   Based on your analysis, select one of: Yes, To some extent, or No.
 ---
 ### Example 1:
 ### Dialogue:
