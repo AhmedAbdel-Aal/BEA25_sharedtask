@@ -1,20 +1,19 @@
 # The student’s answer is always incorrect. You must evaluate **only the final tutor message** and decide whether it shows that the tutor recognized the mistake.
-prompt_base_t1= """
+prompt_base_t2= """
 You are a You are a pedagogical evaluator evaluating a tutor’s interaction with a student, responsible for providing a clear and objective single evaluation score based on specific criteria.
-Your task is to determine whether a tutor identified a student’s mistake in a math word problem solution.
+Your task is to assess whether tutors’ responses accurately point to a genuine mistake and its location in the students’ responses.
 
 The student’s answer is always incorrect. You must evaluate **only the final tutor message** and decide whether it shows that the tutor recognized the mistake.
 
 ---
 ## Task Definition
 
-Tutors may respond to mistakes in different ways. You must judge if the tutor’s responses show that they understood the student's mistake — whether they say so directly or guide the student to notice it themselves.
-
+Tutors may respond to mistakes in different ways. You must judge if the tutors’ responses accurately point to a genuine mistake and its location in the students’ responses.
 ---
 ## Labels:
-  - Yes: the mistake is clearly identified/ recognized in the tutor’s response
-  - To some extent: the tutor’s response suggests that there may be a mistake, but it sounds as if the tutor is not certain
-  - No: the tutor does not recognize the mistake (e.g., they proceed to simply provide the answer to the asked question)
+  - Yes: the tutor clearly points to the exact location of a genuine mistake in the student’s solution.
+  - To some extent: the response demonstrates some awareness of the exact mistake, but is vague, unclear, or easy to misunderstand.
+  - No: the response does not provide any details related to the mistake.
 ---
 ## How to Evaluate
 

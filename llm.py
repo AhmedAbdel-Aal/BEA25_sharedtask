@@ -95,4 +95,4 @@ def llm_call(prompt, backend="openai", model="gpt-4o-mini"):
     elif backend == "llama":
         return llm_call_llama(prompt)
     else:
-        raise ValueError("Invalid backend")
+        raise ValueError(f"Invalid backend - {backend}. Supported backends are: openai, deepseek, mistral, llama.")
