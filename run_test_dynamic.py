@@ -14,11 +14,11 @@ from utils import (
 from llm import llm_call
 dotenv.load_dotenv()
 
-from prompts import prompt_base_t1
+from prompt_base_t2 import prompt_base_t2
 
 dev_data_path = "data/source/mrbench_v3_devset.json"
 test_data_path = "data/source/mrbench_v3_testset.json"
-output_dir = "experiment_dynamic_t1/output_test/"
+output_dir = "experiment_dynamic_t2/output_test/"
 
 dev_data = load_json(dev_data_path)
 test_data = load_json(test_data_path)
@@ -50,29 +50,29 @@ def get_few_shot_examples_test(example, tutor):
     eid = example['conversation_id']
     selected_startified_nn = []
     labels_list=['Yes', 'To some extent', 'No']
-    # Set different thresholds for each label
-    label_thresholds = {
-        'Yes': 2,           # 1 less than before (was 3)
-        'To some extent': 5, # 2 more than before (was 3)
-        'No': 2             # 1 less than before (was 3)
-    }
     
     label_groups = {label: 0 for label in labels_list}
     for tutor_id, tutor_info in example['tutor_responses'].items():
         if tutor_id != tutor:
             continue
         nns = get_nns_test(test_nn, eid, tutor_id)
-        print(f"there are {len(nns['nearest_examples'])} nearest examples")
+        #print(f"there are {len(nns['nearest_examples'])} nearest examples")
         for nn in nns['nearest_examples'][1:]:
             nn_id = nn['id']
             nn_tutor = nn['label']
             nn_example = get_example_from_data(dev_data, nn_id)
-            nn_label = nn_example['tutor_responses'][nn_tutor]['annotation']['Mistake_Identification']
+            nn_label = nn_example['tutor_responses'][nn_tutor]['annotation']['Mistake_Location']
             
-            if label_groups[nn_label] < label_thresholds[nn_label]:
-                path = f"./cot_t1/{nn_id}_{nn_tutor}.json"
+            if label_groups[nn_label] < 2:
+                #path = f"./cot_t1/{nn_id}_{nn_tutor}.json"
+                path = f"./cot_t2/{nn_id}_{nn_tutor}.json"
+                print(f"Loading {path}")
+                if not Path(path).exists():
+                   from generate_cot import run_cot
+                   print('ah will do the cot')
+                   run_cot(nn_example, nn_tutor, model='gpt-4o-mini')
                 cot = load_json(path)
-                selected_startified_nn.append(cot['one_shot'])
+                selected_startified_nn.append(cot['reasoning'])
                 label_groups[nn_label] += 1
     return selected_startified_nn
 
@@ -87,6 +87,8 @@ def get_few_shot_text(example, tutor_id):
     and formatting them into the prompt template
     """
     few_shot_examples = get_few_shot_examples_test(example, tutor_id)
+    if few_shot_examples is None:
+        return None
     few_shot_text = "\n\n".join(few_shot_examples)
 
     return few_shot_text
@@ -97,7 +99,7 @@ def process_example(example, base_prompt_template, backend, model, output_path):
     
     if output_file.exists():
         return None  # already processed
-    
+    flag  = False
     try:
         dialogue_string = dialogue_to_string(extract_dialogue(example["conversation_history"]))
         for tutor_id, tutor_info in example['tutor_responses'].items():
@@ -109,6 +111,9 @@ def process_example(example, base_prompt_template, backend, model, output_path):
             
             # Create dynamic prompt based on this specific example and tutor
             few_shot_text = get_few_shot_text(example, tutor_id)
+            if few_shot_text is None:
+                print(f"Few-shot examples not found for {conv_id} and {tutor_id}")
+                continue
             # The placeholders in prompt_base_t1 are {dialogue}, {feedback}, and {few_shot_examples}
             # The {few_shot_examples} is already replaced in create_dynamic_prompt
             prompt = base_prompt_template.format(
@@ -124,10 +129,14 @@ def process_example(example, base_prompt_template, backend, model, output_path):
             # Extract and save results
             tutor_info['annotation'] = {
                 'Mistake_Identification': extract_xml(llm_response, "mistake_identification"),
+                'Mistake_Location': extract_xml(llm_response, "mistake_location"),
                 'Analysis': extract_xml(llm_response, "analysis"),
+                'initial_prompt': prompt,
             }
+            flag = True
         
-        save_json(output_file, example)
+        if flag:
+            save_json(output_file, example)
         return conv_id
     
     except Exception as e:
@@ -155,6 +164,36 @@ def infere_parallel(base_prompt_template, backend="openai", model="gpt-4o", max_
         for future in tqdm(as_completed(futures), total=len(futures), desc="Processing examples"):
             _ = future.result()
 
+def infer_sequential(base_prompt_template, backend="openai", model="gpt-4o"):
+    """
+    Process examples sequentially (one after another) instead of in parallel
+    """
+    evaluation_data = test_data
+    output_path = Path(output_dir)
+    already_processed = get_already_processed_ids(output_dir)
+    
+    tasks = [
+        ex for ex in evaluation_data
+        if ex['conversation_id'] not in already_processed
+    ]
+    
+    print(f"Processing {len(tasks)} examples sequentially...")
+    
+    for example in tqdm(tasks, desc="Processing examples"):
+        try:
+            result = process_example(example, base_prompt_template, backend, model, output_path)
+            if result:
+                print(f"Processed example: {result}")
+        except Exception as e:
+            print(f"Error processing example {example['conversation_id']}: {e}")
+            continue
+    
+    print("Sequential processing complete!")
+
+#if __name__ == "__main__":
+    # Use sequential processing instead of parallel
+#    infer_sequential(prompt_base_t2)
+
 if __name__ == "__main__":
     # Use the prompt base from prompts.py which already has the {few_shot_examples} placeholder
-    infere_parallel(prompt_base_t1)
+    infere_parallel(prompt_base_t2)

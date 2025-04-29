@@ -12,13 +12,13 @@ from utils import (
     format_prompt,
     extract_xml,
 )
-from prompts import prompt_fs
+from prompts import mistake_prompt_2
 from llm import llm_call
 
 dotenv.load_dotenv()
 
 test_data_path = "data/source/mrbench_v3_testset.json"
-output_dir = "experiment_fs/output_test/"
+output_dir = "experiment_4/output_test/"
 test_data = load_json(test_data_path)
 
 
@@ -45,7 +45,7 @@ def process_example(example, prompt_template, backend, model, output_path):
             llm_response = llm_call(prompt, backend=backend, model=model)
 
             tutor_info['annotation'] = {
-                'Mistake_Identification': extract_xml(llm_response, "mistake_identification"),
+                'Mistake_Identification': extract_xml(llm_response, "mistake"),
                 'Analysis': extract_xml(llm_response, "analysis"),
             }
 
@@ -57,7 +57,7 @@ def process_example(example, prompt_template, backend, model, output_path):
         return None
 
 
-def infere_parallel(prompt_template, backend="openai", model="gpt-4.1", max_workers=8):
+def infere_parallel(prompt_template, backend="openai", model="gpt-4o", max_workers=8):
     evaluation_data = test_data
     output_path = Path(output_dir)
     already_processed = get_already_processed_ids(output_dir)
@@ -83,4 +83,4 @@ def infere_parallel(prompt_template, backend="openai", model="gpt-4.1", max_work
 
 
 if __name__ == "__main__":
-    infere_parallel(prompt_fs)
+    infere_parallel(mistake_prompt_2)

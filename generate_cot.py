@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def run_cot(example, tutor, key='Mistake_Identification', backend='openai',model='gpt-4.1'):
     conv_id = example['conversation_id']
-    output_file = Path(f"cot_t1/{conv_id}_{tutor}.json")
+    output_file = Path(f"cot_t2/{conv_id}_{tutor}.json")
     if output_file.exists():
         return None  # already processed
     
@@ -17,16 +17,22 @@ def run_cot(example, tutor, key='Mistake_Identification', backend='openai',model
     # Convert dialogue to string format
     dialogue = dialogue_to_string(extract_dialogue(example["conversation_history"]))
     feedback = example['tutor_responses'][tutor]['response']
-    label = example['tutor_responses'][tutor]['annotation'][key]
+    label = example['tutor_responses'][tutor]['annotation']['Mistake_Identification']
+    label2 = example['tutor_responses'][tutor]['annotation']['Mistake_Location']
     
     # Create prompt for the LLM
     prompt = f"""
 You are an expert pedagogical evaluator analyzing tutor-student interactions in mathematics education. Your task is to analyze conversations where a student has made a mathematical error and provide structured reasoning that justifies the given evaluation of the tutor's response.
 
-## Evaluation Categories:
+## Mistake Identification Task:
 - **Yes**: The tutor clearly identifies/recognizes the student's mistake
 - **To some extent**: The tutor hints at a possible mistake but lacks certainty or specificity
 - **No**: The tutor fails to recognize the mistake (e.g., moves on, provides generic or irrelevant feedback, or reinforces the error)
+
+## Mistake Location Task:
+  - Yes: the tutor clearly points to the exact location of a genuine mistake in the student’s solution.
+  - To some extent: the response demonstrates some awareness of the exact mistake, but is vague, unclear, or easy to misunderstand.
+  - No: the response does not provide any details related to the mistake.
 
 ## Analysis Framework:
 For each example, you will provide a structured analysis justifying the given evaluation label. Follow these steps precisely:
@@ -76,6 +82,7 @@ Provide your analysis in this XML format:
 </reasoning>
 
 <mistake_identification>{label}</mistake_identification>
+<mistake_location>{label2}</mistake_location>
 """
     
     # Call the LLM
@@ -96,14 +103,15 @@ Provide your analysis in this XML format:
 </reasoning>
 
 <mistake_identification>{label}</mistake_identification>
+<mistake_location>{label2}</mistake_location>
 """
     out = {
         'reasoning': extract_xml(llm_response, "reasoning"),
-        'one_shot': as_one_shot.format(dialogue=dialogue, feedback=feedback, reasoning=reasoning, label=label),
+        'one_shot': as_one_shot.format(dialogue=dialogue, feedback=feedback, reasoning=reasoning, label=label,label2=label2),
     }
     
     # optionally save the analysis to a file
-    save_json(f"cot_t1/{conv_id}_{tutor}.json", out)
+    save_json(f"cot_t2/{conv_id}_{tutor}.json", out)
     
     return True
 
@@ -114,7 +122,7 @@ def process_example(example):
     try:
         for tutor_id, tutor_info in example['tutor_responses'].items():
 
-            cot_response = run_cot(example, tutor_id, key='Mistake_Identification', backend='openai',model='gpt-4.1')
+            cot_response = run_cot(example, tutor_id, key='Mistake_Identification', backend='openai',model='gpt-4o-mini')
             tutor_info['cot'] = {cot_response}
 
         return conv_id
